@@ -77,6 +77,7 @@ lrwxrwxrwx. 1 root root 9 Jan 24 16:18 /usr/bin/python2 -> python2.7
 | r    | 4        | 可读   |
 | w    | 2        | 可写   |
 | z    | 1        | 可执行 |
+| -    | 0        | 无权限 |
 
 ### 文件权限数字字母转换练习
 
@@ -88,3 +89,67 @@ lrwxrwxrwx. 1 root root 9 Jan 24 16:18 /usr/bin/python2 -> python2.7
 - --x rw- rw- bob01 bob01   --->   user:0+0+1 group:4+2+0 other:4+2+0   --->   166
 - -w- -w- -w-jack01 aliyun01   --->   user:0+2+0 group:0+2+0 other:0+2+0   --->   222 
 ```
+
+## chmod 命令
+
+- 语法：chmod 选项 权限 文件
+- 作用：设置、修改文件的权限（包括设置user，group，other对应的权限）
+- 选项：`-R` 递归设置文件夹权限
+- 注意：使用该命令，要么是 root 登录，要么是属主（你不可能随便修改别人的文件权限）
+
+### 文件操作演示
+
+> 以chenyufan01登录，演示普通用户，对文件的 r w x分别表示什么
+
+```bash
+touch 随风奔跑.txt
+
+# 给 user 权限降到最低
+chmod u-r 随风奔跑.txt
+chmod u-w 随风奔跑.txt
+chmod u-r 随风奔跑.txt
+# 给 user 的权限全部加上
+chmod u+r,u+w,u+x
+
+# 演示 group 的 r w x
+# 字母权限的增加、减少，如下：
+chmod g-r,g-w 随风奔跑.txt
+# 其他权限的数字权限只写不读，如下：
+-rwx---r-- 1 chenyufan01 devops 22 3月 16 11:29 随风奔跑.txt
+chmod 702 随风奔跑.txt
+
+# say_hello.sh 脚本，设置为 user只读，group可读可写，其他人可读可写可执行
+chmod 467 say_hello.sh
+```
+
+### 常用的修改用户权限的命令
+
+- chmod：设置、修改文件的权限
+- chgrp：修改文件的属组，group
+  - `chgrp wuyifan01 say_hello.sh`
+- chown：修改文件的属主，user
+  - `chown wuyifan01 say_hello.sh`
+
+## 文件夹的读写执行
+
+> 创建文件夹，分别查看读、写、执行的权限**（要想在文件夹下创建文件，必须要有可执行(x)权限）**
+
+```bash
+# wuyifan创建文件夹
+mkdir 吴亦凡的歌
+# 清空权限
+chmod 000 吴亦凡的歌/
+                                                    # luozhixiang查看，提示权限不够
+                                                    ls 吴亦凡的歌/
+# 使用用户wuyifan给该文件夹其他人权限添加可读权限
+chmod o+r 吴亦凡的歌/
+													# luozhixiang可以查看文件夹了，他创建一个APT.music会提示无权限
+													touch 吴亦凡的歌/APT.music
+# 使用用户wuyifan给该文件夹其他人权限添加可读可写权限
+chmod 006 吴亦凡的歌/
+													# 此时luozhixiang创建APT.music依旧提示无权限，要想可以创建，必须要有x权限
+# 使用用户wuyifan给该文件夹其他人权限添加可读可写可执行权限
+chmod 007 吴亦凡的歌/
+													# 此时luozhixiang创建APT.music，可完成创建
+```
+
