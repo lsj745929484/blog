@@ -3,29 +3,17 @@ import { navbar } from "vuepress-theme-hope";
 export default navbar([
   "/",
   "/portfolio",
-  "/demo/",
   {
-    text: "指南",
+    text: "Linux相关",
     icon: "lightbulb",
-    prefix: "/guide/",
+    prefix: "/Linux/",
     children: [
       {
-        text: "Bar",
+        text: "Linux基础",
         icon: "lightbulb",
-        prefix: "bar/",
-        children: ["baz", { text: "...", icon: "ellipsis", link: "" }],
-      },
-      {
-        text: "Foo",
-        icon: "lightbulb",
-        prefix: "foo/",
-        children: ["ray", { text: "...", icon: "ellipsis", link: "" }],
+        prefix: "Linux基础/",
+        link: "Linux基础/",
       },
     ],
-  },
-  {
-    text: "V2 文档",
-    icon: "book",
-    link: "https://theme-hope.vuejs.press/zh/",
   },
 ]);

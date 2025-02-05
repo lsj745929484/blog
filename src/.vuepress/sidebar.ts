@@ -5,22 +5,10 @@ export default sidebar({
     "",
     "portfolio",
     {
-      text: "案例",
-      icon: "laptop-code",
-      prefix: "demo/",
-      link: "demo/",
-      children: "structure",
-    },
-    {
-      text: "文档",
+      text: "Linux相关",
       icon: "book",
-      prefix: "guide/",
+      prefix: "Linux/",
       children: "structure",
-    },
-    {
-      text: "幻灯片",
-      icon: "person-chalkboard",
-      link: "https://ecosystem.vuejs.press/zh/plugins/markdown/revealjs/demo.html",
     },
   ],
 });
